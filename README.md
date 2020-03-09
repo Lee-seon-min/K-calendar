@@ -13,6 +13,6 @@ set() : VERSION_CODES.KITKAT > VERSION.SDK_INT
                 } else {
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 }
-            }"'
+            }'"
 
 
