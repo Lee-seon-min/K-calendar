@@ -22,6 +22,52 @@ else{
 }
 ```
   
+  
+### Notification Channel  
+Oreo versions and above require a notification channel.  
+```
+public class AlarmReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        SharedPreferences preferences=context.getSharedPreferences(AlarmFragment.ALARM,Context.MODE_PRIVATE);
+        String tonic=preferences.getString(AlarmFragment.TONIC,"");
+        NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(context,"default");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //오레오 이상에서 채널의 필요
+            //채널 설정
+            manager.createNotificationChannel(new NotificationChannel("default","기본",NotificationManager.IMPORTANCE_DEFAULT));
+
+            builder.setSmallIcon(R.drawable.ic_alarm_icon); //drawable을 사용해야함
+        }
+        else
+            builder.setSmallIcon(R.mipmap.ic_launcher_alarm_icon); //mipmap을 사용해야함
+
+        //소리와 각종 텍스트 설정
+        builder.setColor(Color.GREEN);
+        builder.setContentTitle("영양제 알림");
+        builder.setContentText("'"+tonic+"'드실 시간입니다! 어서 챙겨드세요!");
+        Uri ring= RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(ring);
+
+        //진동 패턴 설정
+        long[] pattern={0,100,200,300};
+        builder.setVibrate(pattern);
+        builder.setAutoCancel(true);
+
+        if(manager!=null){
+            manager.notify(1,builder.build()); //알람실행
+            Calendar notifyTime=Calendar.getInstance();
+            notifyTime.add(Calendar.DATE,1);
+
+            SharedPreferences.Editor editor=context.getSharedPreferences(AlarmFragment.ALARM,Context.MODE_PRIVATE).edit();
+            editor.putLong(AlarmFragment.NOTIFY_ALARM_TIME,notifyTime.getTimeInMillis());
+            editor.commit();
+        }
+
+    }
+}
+```  
+  
 ## Deprecated
 <ul>
    <li>AsyncTask</li>
