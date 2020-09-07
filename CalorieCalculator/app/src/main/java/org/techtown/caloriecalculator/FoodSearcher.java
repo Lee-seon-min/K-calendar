@@ -30,7 +30,7 @@ import java.util.List;
 public class FoodSearcher extends AppCompatActivity implements FoodRecyclerViewAdaptor.ISetOnUpdateCheckBoxListener {
     private FoodRecyclerViewAdaptor adaptor;
     String location = null;
-    private static String Key = "g%2FibSWloSudu2ygF0GH8rydjqapstXegTVkFCj3HnPu9kVyU0W3lWgxKunGMCUXNjsXabJ0qxA2qtMZrtP3RyA%3D%3D";
+    private static String Key = "hiding_key";
     public static String RESULT_KCAL_KEY = "result";
     private double allSumKcal = 0;
     private Button getFoodButton, searching;
@@ -144,7 +144,7 @@ public class FoodSearcher extends AppCompatActivity implements FoodRecyclerViewA
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String queryUrl = "http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?ServiceKey=g%2FibSWloSudu2ygF0GH8rydjqapstXegTVkFCj3HnPu9kVyU0W3lWgxKunGMCUXNjsXabJ0qxA2qtMZrtP3RyA%3D%3D"
+        String queryUrl = "http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?ServiceKey="+Key
                     + "&numOfRows=100&pageNo=1"+"&desc_kor="+location;
             try {
                 URL url = new URL(queryUrl);
